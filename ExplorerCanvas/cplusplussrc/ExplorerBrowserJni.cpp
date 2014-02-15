@@ -77,8 +77,6 @@ static JNIEnv* getGlobalEnv(JavaVM* g_vm) {
 	// double check it's all ok
 	int getEnvStat = g_vm->GetEnv((void **)&g_env, JNI_VERSION_1_6);
 	if (getEnvStat == JNI_EDETACHED) {
-//		printf("GetEnv: not attached\n");
-//		fflush(stdout);
 		if (g_vm->AttachCurrentThread((void **) &g_env, NULL) != 0) {
 			LOG(logERROR) << "ExplorerBrowserJni:getGlobalEnv: attach failed";
 			return NULL;
@@ -132,7 +130,7 @@ public:
 		env->CallVoidMethod(javaCanvas, methSelectionchanged);
 	};
 
-	virtual void getContextMenuCustomOptions(map<long, char *>* mapReturn, char* contextMenuFocusedPath) {
+	void getContextMenuCustomOptions(map<long, char *>* mapReturn, char* contextMenuFocusedPath) {
 		JNIEnv* env = getGlobalEnv(g_vm);
 		jstring jcontextMenuFocusedPath = env->NewStringUTF(contextMenuFocusedPath);
 		jobjectArray astrCustomOptions = (jobjectArray) env->CallObjectMethod(javaCanvas, methGetContextMenuCustomOptions, jcontextMenuFocusedPath);
@@ -150,7 +148,7 @@ public:
 		}
 	}
 
-	virtual void notifyContextMenuCustomOption(int iOption, char* contextMenuFocusedPath) {
+	void notifyContextMenuCustomOption(int iOption, char* contextMenuFocusedPath) {
 		JNIEnv* env = getGlobalEnv(g_vm);
 		jstring jcontextMenuFocusedPath = env->NewStringUTF(contextMenuFocusedPath);
 		env->CallVoidMethod(javaCanvas, methNotifyContextMenuCustomOption, iOption, jcontextMenuFocusedPath);

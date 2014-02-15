@@ -20,17 +20,16 @@
 
 #include <iostream>
 
-#include <stdio.h> // C:\MinGW64_TDM\x86_64-w64-mingw32\include
-#include <windows.h> // C:\MinGW64_TDM\x86_64-w64-mingw32\include
-#include <ole2.h> // C:\MinGW64_TDM\x86_64-w64-mingw32\include
-#include <shlobj.h> // C:\MinGW64_TDM\x86_64-w64-mingw32\include
-#include <shobjidl.h> // C:\MinGW64_TDM\x86_64-w64-mingw32\include
-#include <objbase.h> // C:\MinGW64_TDM\x86_64-w64-mingw32\include
-#include <initguid.h> // C:\MinGW64_TDM\x86_64-w64-mingw32\include
+#include <stdio.h>
+#include <windows.h>
+#include <ole2.h>
+#include <shlobj.h>
+#include <shobjidl.h>
+#include <objbase.h>
+#include <initguid.h>
 
 #include <windowsx.h>
 
-//#include "CExplorerBrowserEvents.h"
 #include "CExplorerBrowser.h"
 #include "search_ms777.h"
 #include "StringUtils.h"
@@ -44,7 +43,6 @@ using namespace std;
 
 
 
-//HWINEVENTHOOK  CExplorerBrowser::wineventhook;
 map<HWND, CExplorerBrowser*> CExplorerBrowser::mapCanvasExplorerbrowser;
 
 
@@ -774,7 +772,12 @@ DWORD WINAPI CExplorerBrowser::threadMsgLoop(LPVOID threadParams) {
 	CExplorerBrowser* explorerBrowser = (CExplorerBrowser*) threadParams;
 	LOG(logINFO) << "threadMsgLoop start, hwndJavaWindow : " << (long long int) explorerBrowser->hwndJavaWindow;
 
-    HWND hwndNew  = CreateWindow(wc.lpszClassName, NULL, WS_CHILD , 0, 0, 50, 50,
+	RECT rJavaWindow;
+	GetClientRect(explorerBrowser->hwndJavaWindow, &rJavaWindow);
+
+
+    HWND hwndNew  = CreateWindow(wc.lpszClassName, NULL, WS_CHILD ,
+    		0, 0, rJavaWindow.right-rJavaWindow.left, rJavaWindow.bottom-rJavaWindow.top,
 			explorerBrowser->hwndJavaWindow,
 			NULL,
 			wc.hInstance,

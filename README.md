@@ -4,12 +4,12 @@
 	<TITLE></TITLE>
 	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.4.1  (Win32)">
 	<META NAME="CREATED" CONTENT="20140215;12120840">
-	<META NAME="CHANGED" CONTENT="20140215;23210389">
+	<META NAME="CHANGED" CONTENT="20140216;461900">
 	<STYLE TYPE="text/css">
 	</STYLE>
 </HEAD>
 <BODY LANG="de-DE" DIR="LTR">
-<H1 CLASS="western">Java Windows Explorer</H1>
+<H1>Java Windows Explorer</H1>
 <P STYLE="margin-bottom: 0cm">Windows Explorer has many capabilities,
 which are difficult or cumbersome to implement in Java. This software
 allows to include a Windows Explorer into Java Swing applications.
@@ -34,7 +34,14 @@ already enough tools which allow for this.</P>
 	item</P>
 	<LI><P STYLE="margin-bottom: 0cm">You can use Windows search by
 	code, with very detailed control over search scope. I found that
-	Windows search is much better than its reputation ...</P>
+	Windows search is much better than its reputation &hellip;</P>
+</UL>
+<P STYLE="margin-bottom: 0cm">For a simple demo:</P>
+<UL>
+	<LI><P STYLE="margin-bottom: 0cm">download the suitable jar in
+	ExplorerCancas/jar. If you do not know if your default Java is 32bit
+	or 64bit download both.</P>
+	<LI><P STYLE="margin-bottom: 0cm">doubleclick  the jar</P>
 </UL>
 <H2 CLASS="western">Requirements for running:</H2>
 <UL>
