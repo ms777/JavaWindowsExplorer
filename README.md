@@ -1,4 +1,3 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <HTML>
 <HEAD>
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
@@ -7,23 +6,10 @@
 	<META NAME="CREATED" CONTENT="20140215;12120840">
 	<META NAME="CHANGED" CONTENT="20140215;23210389">
 	<STYLE TYPE="text/css">
-	<!--
-		@page { margin: 2cm }
-		P { margin-bottom: 0.21cm }
-		H3 { margin-bottom: 0.21cm }
-		H3.western { font-family: "Arial", sans-serif }
-		H3.cjk { font-family: "Microsoft YaHei" }
-		H3.ctl { font-family: "Mangal" }
-		H2 { margin-bottom: 0.21cm }
-		H2.western { font-family: "Arial", sans-serif; font-size: 14pt; font-style: italic }
-		H2.cjk { font-family: "Microsoft YaHei"; font-size: 14pt; font-style: italic }
-		H2.ctl { font-family: "Mangal"; font-size: 14pt; font-style: italic }
-		A:link { so-language: zxx }
-	-->
 	</STYLE>
 </HEAD>
 <BODY LANG="de-DE" DIR="LTR">
-<H3 CLASS="western">Java Windows Explorer</H3>
+<H1 CLASS="western">Java Windows Explorer</H1>
 <P STYLE="margin-bottom: 0cm">Windows Explorer has many capabilities,
 which are difficult or cumbersome to implement in Java. This software
 allows to include a Windows Explorer into Java Swing applications.
