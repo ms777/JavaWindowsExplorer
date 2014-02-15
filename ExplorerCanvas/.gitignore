@@ -1,0 +1,6 @@
+*.o
+*.class
+./unused
+./bin
+/unused
+/bin
