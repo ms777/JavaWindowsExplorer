@@ -1,0 +1,13 @@
+LIBRARY "SHELL32.dll"
+EXPORTS
+SHCreateShellItem@16
+SHCreateShellItemArray@20
+SHCreateShellItemArrayFromDataObject@12
+SHCreateShellItemArrayFromIDLists@12
+SHCreateShellItemArrayFromShellItem@12
+SHGetKnownFolderIDList@16
+SHGetKnownFolderItem@20
+SHGetKnownFolderPath@16
+SHCreateItemFromIDList@12
+SHCreateItemInKnownFolder@20
+SHGetStockIconInfo@12

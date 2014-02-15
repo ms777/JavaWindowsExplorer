@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="ExplorerCanvas.makethejars" default="makethejars" basedir=".">
+	<property name="GPPEXE" value="C:\MinGW64_TDM\bin\g++.exe"/>
+  	
+  	<property name="JDKPATH_64" value="C:\\Program Files\\Java\\jdk1.7.0_45\\" />
+  	<property name="OBJDIR_64" value="Debug64\\" />
+  	<property name="GPPOPTION_64" value="" />
+  	<property name="DLLNAME_64" value="libExplorerCanvas64.dll" />
+  	<property name="SHELL32PATH_64" value="shell32\\lib64" />
+  	<property name="JARNAME_64" value="ExplorerCanvas64.jar" />
+
+  	<property name="JDKPATH_32" value="C:\\Program Files (x86)\\Java\\jdk1.7.0_25\\" />
+  	<property name="OBJDIR_32" value="Debug32\\" />
+  	<property name="GPPOPTION_32" value="-m32" />
+  	<property name="DLLNAME_32" value="libExplorerCanvas32.dll" />
+  	<property name="SHELL32PATH_32" value="shell32\\lib32" />
+  	<property name="JARNAME_32" value="ExplorerCanvas32.jar" />
+
+	<target name="link">
+		<echo>link: objectdir ${objectdir}</echo>
+  		<delete >
+  			<fileset dir="${objectdir}" includes="**/*.dll" defaultexcludes="no"/>
+  		</delete>
+		<apply executable="${GPPEXE}" parallel="true" failonerror = "true"> 
+		    <arg value="-s"/> 
+		    <arg value="-L${shell32path}"/> 
+		    <arg value="-Wl,--add-stdcall-alias"/> 
+		    <arg value="-shared"/> 
+  		    <arg value="${gppoption}"/>
+		    <arg value="-o"/> 
+		    <arg value="${objectdir}${dllname}"/> 
+		    <srcfile/> 
+		    <arg value="-lole32"/> 
+		    <arg value="-lshell32"/> 
+		    <arg value="-lshell32_ms777"/> 
+		    <arg value="-lshlwapi"/> 
+		    <arg value="-luuid"/> 
+		    <arg value="-lpsapi"/> 
+
+	 		<fileset dir="${basedir}" includes="${objectdir}\\**\\*.o"/>        
+		</apply> 
+	</target>
+
+	<target name="compilecppall">
+		<echo>compilecppall: objectdir ${objectdir}</echo>
+  		<delete >
+  			<fileset dir="${objectdir}" includes="**/*" defaultexcludes="no"/>
+  		</delete>
+		<apply executable="${GPPEXE}" parallel="false" failonerror = "true"> 
+  			<arg value="-DNTDDIVERSION=NTDDI_VISTA" />
+  			<arg value="-DWINVER_VISTA" />
+ 	  		<arg value="-D_WIN32_IE=0x0800" />
+  	  		<arg value="-D_WIN32_WINNT=_WIN32_WINNT_VISTA" />
+
+  			<arg value="-Icplusplussrc\\explorerbrowser" />
+  			<arg value="-Icplusplussrc\\utils" />
+  			<arg value="-Icplusplussrc\\search" />
+
+  		    <arg value="-I${jdkpath}include"/>
+  		    <arg value="-I${jdkpath}include\\win32"/>
+
+  		    <arg value="-O0"/>
+  		    <arg value="${gppoption}"/>
+  		    <arg value="-g3"/>
+  		    <arg value="-Wall"/>
+  		    <arg value="-c"/>
+  		    <arg value="-fmessage-length=0"/>
+  		    <arg value="-fpermissive"/>
+
+  		    <arg value="-o"/>
+		    <targetfile/> 
+
+		    <srcfile/> 
+
+	    	<globmapper from="*.cpp" to="${objectdir}*.o"/>
+
+	 		<fileset dir="${basedir}" includes="cplusplussrc\\**\\*.cpp"/>        
+		</apply> 
+	</target>
+
+ 	<target name="compilejavamakejar">
+  		<delete >
+  			<fileset dir="bin" includes="**/*" defaultexcludes="no"/>
+  		</delete>
+		<javac srcdir="javasrc" destdir="bin" fork="yes" executable="${jdkpath}bin\\javac.exe" includeAntRuntime = "no"/>
+ 
+		<jar destfile="jar\\${jarname}">
+			<fileset dir="bin" casesensitive="yes">
+				<include name="**/*.class"/>
+    		</fileset>
+    		<fileset dir="${objectdir}" casesensitive="yes">
+    			<include name="${dllname}"/>
+    		</fileset>
+        	<manifest>
+            	<attribute name="Main-Class" value="ms777.explorercanvas.test.ExplorerCanvasFrame"/> 
+        	</manifest>
+    	</jar>
+	</target>
+	
+    		
+	<target name ="doit">
+ 		<antcall target="compilecppall"/>
+		<antcall target="link"/>
+		<antcall target="compilejavamakejar"/>
+	</target>
+	
+	
+	
+	<target name ="makethejars" description="Creates a 32-bit jar for the ExplorerCanvas">
+
+		<echo>basedir: ${basedir}</echo>
+		<echo>GPPEXE: ${GPPEXE}</echo>
+  		
+<!--		<fileset id="dist.contents" dir="${basedir}\\cplusplussrc" includes="**\\*.cpp"/>
+		<fileset id="dist.contents" dir="${basedir}" includes="${objectdir}\\**\\*.o"/>        
+		<property name="prop.dist.contents" refid="dist.contents"/>                                            
+        <echo>${prop.dist.contents}</echo>   
+-->        
+  		
+		<antcall target = "doit">
+		    <param name="jdkpath" value="${JDKPATH_64}"/>
+		    <param name="objectdir" value="${OBJDIR_64}"/>
+		    <param name="gppoption" value="${GPPOPTION_64}"/>
+		    <param name="dllname" value="${DLLNAME_64}"/>
+		    <param name="shell32path" value="${SHELL32PATH_64}"/>
+		    <param name="jarname" value="${JARNAME_64}"/>
+		</antcall>
+
+		<antcall target = "doit">
+		    <param name="jdkpath" value="${JDKPATH_32}"/>
+		    <param name="objectdir" value="${OBJDIR_32}"/>
+		    <param name="gppoption" value="${GPPOPTION_32}"/>
+		    <param name="dllname" value="${DLLNAME_32}"/>
+		    <param name="shell32path" value="${SHELL32PATH_32}"/>
+		    <param name="jarname" value="${JARNAME_32}"/>
+		</antcall>
+
+   	</target>
+	
+</project>
+
+
