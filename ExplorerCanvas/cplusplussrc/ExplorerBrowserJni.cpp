@@ -217,6 +217,17 @@ void setLoglevel(JNIEnv *env, jclass clazz, jint iLevel) {
 	Log::setReportingLevel((TLogLevel) iLevel);
 }
 
+//#define BUILT_DATE "2014-02-16 12:32:30";
+
+jstring getBuiltDate(JNIEnv *env, jclass clazz) {
+#ifndef BUILT_DATE
+	return NULL;
+#else
+	const char* cp = BUILT_DATE;
+	return env->NewStringUTF(cp);
+#endif
+}
+
 jlong notifyCreated(JNIEnv *env, jclass clazz, jobject thisobject, jlong lExplorerBrowserOptions, jlong lFolderViewMode, jlong lFolderFlags) {
 	// setting up the global variables
 	if (methHashcode == NULL) {
@@ -536,6 +547,7 @@ jlong doSearch(JNIEnv *env, jclass clazz, jobject thisobject, jobjectArray asSco
 static JNINativeMethod method_table[] = {
 		{ "notifyCreated", 		"(Lms777/explorercanvas/ExplorerCanvas;JJJ)J", (void *) notifyCreated }
 		,{ "setLoglevel",		"(I)V", (void *) setLoglevel }
+		,{ "getBuiltDate",		"()Ljava/lang/String;", (void *) getBuiltDate }
 		,{ "sendCommand",		"(Lms777/explorercanvas/ExplorerCanvas;I)V", (void *) sendCommand }
 		,{ "browseRelative",	"(Lms777/explorercanvas/ExplorerCanvas;I)V", (void *) browseRelative }
 		,{ "browseTo",			"(Lms777/explorercanvas/ExplorerCanvas;Ljava/lang/String;)V", (void *) browseTo }

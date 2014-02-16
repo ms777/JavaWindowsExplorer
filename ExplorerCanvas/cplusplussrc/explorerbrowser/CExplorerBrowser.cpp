@@ -771,13 +771,14 @@ DWORD WINAPI CExplorerBrowser::threadMsgLoop(LPVOID threadParams) {
 
 	CExplorerBrowser* explorerBrowser = (CExplorerBrowser*) threadParams;
 	LOG(logINFO) << "threadMsgLoop start, hwndJavaWindow : " << (long long int) explorerBrowser->hwndJavaWindow;
-
+/*
 	RECT rJavaWindow;
 	GetClientRect(explorerBrowser->hwndJavaWindow, &rJavaWindow);
-
+*/
 
     HWND hwndNew  = CreateWindow(wc.lpszClassName, NULL, WS_CHILD ,
-    		0, 0, rJavaWindow.right-rJavaWindow.left, rJavaWindow.bottom-rJavaWindow.top,
+//    		0, 0, rJavaWindow.right-rJavaWindow.left, rJavaWindow.bottom-rJavaWindow.top,
+    		0, 0, 50, 50,
 			explorerBrowser->hwndJavaWindow,
 			NULL,
 			wc.hInstance,

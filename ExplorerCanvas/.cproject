@@ -38,18 +38,17 @@
 								<option id="gnu.cpp.compiler.mingw.so.debug.option.optimization.level.941897993" name="Optimization Level" superClass="gnu.cpp.compiler.mingw.so.debug.option.optimization.level" value="gnu.cpp.compiler.optimization.level.none" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.mingw.so.debug.option.debugging.level.332514437" name="Debug Level" superClass="gnu.cpp.compiler.mingw.so.debug.option.debugging.level" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.include.paths.1216766597" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;C:/Program Files (x86)/Java/jdk1.7.0_25/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;C:/Program Files (x86)/Java/jdk1.7.0_25/include/win32&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/cplusplussrc/explorerbrowser}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/cplusplussrc/utils}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/cplusplussrc/search}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;C:/Program Files (x86)/Java/jdk1.7.0_25/include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;C:/Program Files (x86)/Java/jdk1.7.0_25/include/win32&quot;"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.321685827" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="NTDDIVERSION=NTDDI_VISTA"/>
 									<listOptionValue builtIn="false" value="WINVER_VISTA"/>
 									<listOptionValue builtIn="false" value="_WIN32_IE=0x0800"/>
 									<listOptionValue builtIn="false" value="_WIN32_WINNT=_WIN32_WINNT_VISTA"/>
-									<listOptionValue builtIn="false" value="_JNI_IMPLEMENTATION_"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.other.other.853441324" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-m32 -c -fmessage-length=0  -fpermissive" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.222870416" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
@@ -67,7 +66,6 @@
 									<listOptionValue builtIn="false" value="WINVER=0x0601"/>
 									<listOptionValue builtIn="false" value="_WIN32_IE=0x0800"/>
 									<listOptionValue builtIn="false" value="_WIN32_WINNT=0x0601"/>
-									<listOptionValue builtIn="false" value="_JNI_IMPLEMENTATION_"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.714317644" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
@@ -77,9 +75,7 @@
 							<tool id="cdt.managedbuild.tool.gnu.cpp.linker.mingw.so.debug.1848303255" name="MinGW C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.mingw.so.debug">
 								<option defaultValue="true" id="gnu.cpp.link.mingw.so.debug.option.shared.472915312" name="Shared (-shared)" superClass="gnu.cpp.link.mingw.so.debug.option.shared" value="true" valueType="boolean"/>
 								<option id="gnu.cpp.link.option.flags.1925414682" name="Linker flags" superClass="gnu.cpp.link.option.flags" value="-m32 -Wl,--add-stdcall-alias" valueType="string"/>
-								<option id="gnu.cpp.link.option.userobjs.2141885803" name="Other objects" superClass="gnu.cpp.link.option.userobjs" valueType="userObjs">
-									<listOptionValue builtIn="false" value="&quot;C:\Program Files (x86)\Java\jdk1.7.0_25\lib\jawt.lib&quot;"/>
-								</option>
+								<option id="gnu.cpp.link.option.userobjs.2141885803" name="Other objects" superClass="gnu.cpp.link.option.userobjs" valueType="userObjs"/>
 								<option id="gnu.cpp.link.option.libs.1700292809" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" value="ole32"/>
 									<listOptionValue builtIn="false" value="shell32"/>
@@ -199,11 +195,11 @@
 								<option id="gnu.cpp.compiler.mingw.so.debug.option.optimization.level.89964217" name="Optimization Level" superClass="gnu.cpp.compiler.mingw.so.debug.option.optimization.level" value="gnu.cpp.compiler.optimization.level.none" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.mingw.so.debug.option.debugging.level.1768239957" name="Debug Level" superClass="gnu.cpp.compiler.mingw.so.debug.option.debugging.level" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.include.paths.1254323762" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;C:\Program Files\Java\jdk1.7.0_45\include\win32&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;C:\Program Files\Java\jdk1.7.0_45\include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/cplusplussrc/explorerbrowser}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/cplusplussrc/utils}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/cplusplussrc/search}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;C:\Program Files\Java\jdk1.7.0_45\include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;C:\Program Files\Java\jdk1.7.0_45\include\win32&quot;"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.1449118959" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="NTDDIVERSION=NTDDI_VISTA"/>
@@ -227,7 +223,6 @@
 									<listOptionValue builtIn="false" value="WINVER=0x0601"/>
 									<listOptionValue builtIn="false" value="_WIN32_IE=0x0800"/>
 									<listOptionValue builtIn="false" value="_WIN32_WINNT=0x0601"/>
-									<listOptionValue builtIn="false" value="_JNI_IMPLEMENTATION_"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.2127697133" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
@@ -278,6 +273,7 @@
 			<resource resourceType="PROJECT" workspacePath="/ExplorerCanvas"/>
 		</configuration>
 	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 	<storageModule moduleId="scannerConfiguration">
 		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
 		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.mingw.so.release.807026855;cdt.managedbuild.config.gnu.mingw.so.release.807026855.;cdt.managedbuild.tool.gnu.c.compiler.mingw.so.release.1417317479;cdt.managedbuild.tool.gnu.c.compiler.input.906488681">
@@ -289,9 +285,14 @@
 		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.mingw.so.debug.722785647;cdt.managedbuild.config.gnu.mingw.so.debug.722785647.;cdt.managedbuild.tool.gnu.cpp.compiler.mingw.so.debug.2091338358;cdt.managedbuild.tool.gnu.cpp.compiler.input.222870416">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileCPP"/>
 		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.mingw.so.debug.722785647.2023414346;cdt.managedbuild.config.gnu.mingw.so.debug.722785647.2023414346.;cdt.managedbuild.tool.gnu.c.compiler.mingw.so.debug.624014898;cdt.managedbuild.tool.gnu.c.compiler.input.2127697133">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileC"/>
+		</scannerConfigBuildInfo>
 		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.mingw.so.release.807026855;cdt.managedbuild.config.gnu.mingw.so.release.807026855.;cdt.managedbuild.tool.gnu.cpp.compiler.mingw.so.release.1621126247;cdt.managedbuild.tool.gnu.cpp.compiler.input.104292705">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileCPP"/>
 		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.mingw.so.debug.722785647.2023414346;cdt.managedbuild.config.gnu.mingw.so.debug.722785647.2023414346.;cdt.managedbuild.tool.gnu.cpp.compiler.mingw.so.debug.972037273;cdt.managedbuild.tool.gnu.cpp.compiler.input.1142393809">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileCPP"/>
+		</scannerConfigBuildInfo>
 	</storageModule>
-	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 </cproject>

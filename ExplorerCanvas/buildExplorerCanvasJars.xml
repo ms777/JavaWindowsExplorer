@@ -54,6 +54,8 @@
 			<arg value="-D_WIN32_IE=0x0800" />
 			<arg value="-D_WIN32_WINNT=_WIN32_WINNT_VISTA" />
 
+			<arg value="-DBUILT_DATE=\&quot;${built.date}\&quot;" />
+
 			<arg value="-Icplusplussrc\\explorerbrowser" />
 			<arg value="-Icplusplussrc\\utils" />
 			<arg value="-Icplusplussrc\\search" />
@@ -96,6 +98,7 @@
 			</fileset>
 			<manifest>
 				<attribute name="Main-Class" value="ms777.explorercanvas.test.ExplorerCanvasFrame"/> 
+				<attribute name="Built-Date" value="${built.date}"/>
 			</manifest>
 		</jar>
 	</target>
@@ -109,10 +112,15 @@
 	
 	
 	
-	<target name ="makethejars" description="Creates a 32-bit jar for the ExplorerCanvas">
+	<target name ="makethejars" description="Creates 32-bit and 64-bit jars for the ExplorerCanvas">
 
 		<echo>basedir: ${basedir}</echo>
 		<echo>GPPEXE: ${GPPEXE}</echo>
+		<tstamp>
+			<format property="built.date" pattern="yyyy-MM-dd hh:mm:ss" />
+		</tstamp>
+		<echo>built.date: ${built.date}</echo>
+
 		
 <!--	<fileset id="dist.contents" dir="${basedir}\\cplusplussrc" includes="**\\*.cpp"/>
 	<fileset id="dist.contents" dir="${basedir}" includes="${objectdir}\\**\\*.o"/> 

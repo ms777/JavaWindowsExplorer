@@ -31,8 +31,14 @@ import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.jar.Attributes;
+import java.util.jar.Manifest;
+import java.util.prefs.Preferences;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 
 @SuppressWarnings("serial")
@@ -66,7 +72,7 @@ public class ExplorerCanvas extends Canvas implements HierarchyListener {
 		try {
 			if (isRunFromJar) {
 				System.out.println("loading library " + sLibraryName + " from jar");
-				loadLib("ExplorerCanvas", sLibraryName);
+				loadLibFromJar("ExplorerCanvas", sLibraryName);
 			} else {
 				System.out.println("loading library " + sLibraryName + " through System.loadLibrary");
 				System.loadLibrary(sLibraryName); 
@@ -164,8 +170,10 @@ public class ExplorerCanvas extends Canvas implements HierarchyListener {
 	/* MODE_QUERY does not yet work. Always use MODE_BROWSER */ 
 	public final static Mode MODE_QUERY = new Mode(EBO_NOBORDER, FVM_DETAILS, FWF_NOCLIENTEDGE);
 
-	private native static synchronized long notifyCreated(ExplorerCanvas explorerCanvas, long lExplorerBrowserOptions, long lFolderViewMode, long lFolderFlags);
 	private native static synchronized void setLoglevel(int logLevel);
+	private native static synchronized String getBuiltDate();
+	
+	private native static synchronized long notifyCreated(ExplorerCanvas explorerCanvas, long lExplorerBrowserOptions, long lFolderViewMode, long lFolderFlags);
 	private native static synchronized void browseTo(ExplorerCanvas explorerCanvas, String sPath);
 	private native static synchronized void sendCommand(ExplorerCanvas explorerCanvas, int iCommand);
 	private native static synchronized void browseRelative(ExplorerCanvas explorerCanvas, int iSBSPconst);
@@ -282,7 +290,7 @@ public class ExplorerCanvas extends Canvas implements HierarchyListener {
 	 * Performs a Windows search
 	 * @param asScope an array of the folders you want to search. Use null, if you want to search the complete index
 	 * @param sQuery an AQS query syntax string. See the ExplorerBrowserFrame example for usage
-	 * @param sDisplayName somehow needed by Windows. For subsequent searches use different display names
+	 * @param sDisplayName somehow needed by Windows. For subsequent searches use different display names, otherwise the previous search is only updated
 	 * @return
 	 */
 	public long doSearch(String[] asScope, String sQuery, String sDisplayName) {
@@ -290,7 +298,7 @@ public class ExplorerCanvas extends Canvas implements HierarchyListener {
 	}
 
 	/**
-	 * The native IExplorerBrowser somehow catches all ekyboard input. Call giveupFocus, if you want to enter text in the rest of your application.
+	 * The native IExplorerBrowser somehow catches all keyboard input. Call giveupFocus, if you want to enter text in the rest of your application.
 	 * It does not harm to call giveupFocus too often.
 	 */
 	public void giveupFocus() {
@@ -299,7 +307,9 @@ public class ExplorerCanvas extends Canvas implements HierarchyListener {
 
 
 	/**
-	 * Do not modify. 
+	 * Do not modify or override. hierarchyChanged is called by Swing. notifyCreated informs the dll about the window
+	 * handle of the java parent window.
+	 * B_GET_HWND_FROM_JAVA defaults to false. The if clause will most likely be removed
 	 */
 	@Override
 	public void hierarchyChanged(HierarchyEvent e) {
@@ -325,6 +335,12 @@ public class ExplorerCanvas extends Canvas implements HierarchyListener {
 	}
 
 
+    /**
+     * helper for the case B_GET_HWND_FROM_JAVA = true. Will most likely be removed.
+     * @param o
+     * @param methodName
+     * @return
+     */
     private static Object invokeMethod(Object o, String methodName) {
         Class c = o.getClass();
         for (Method m : c.getMethods()) {
@@ -342,16 +358,26 @@ public class ExplorerCanvas extends Canvas implements HierarchyListener {
     
  
     /**
-     * Puts library to temp dir (C:\Users\somebody\AppData\Local\Temp\ExplorerCanvas) and loads to memory
-     * Only needed when using the jar.
+     * Extracts the dll from the jar and puts it to a temp dir (C:\Users\somebody\AppData\Local\Temp\(tmppath).
+     * If a mismatch between the jar built date and the dll built date is detected,
+     * the user is informed. She should confirm deleting the dll. Then the program writes info to the registry and exits.
+     * On the next run, the dll is deleted and forced to be extracted from the jar.
+     * If everything runs fine the dll is loaded.
+     * @param tmppath the path in java.io.tempdir
+     * @param name the library name without .dll, e.g. libExplorerCanvas64
+     * @throws UnsatisfiedLinkError
      */
-    private static void loadLib(String tmppath, String name) throws UnsatisfiedLinkError {
+    private static void loadLibFromJar(String tmppath, String name) throws UnsatisfiedLinkError {
     	name = name + ".dll";
     	try {
     		InputStream in = ClassLoader.class.getResourceAsStream("/" + name );
     		File fileOut = new File(System.getProperty("java.io.tmpdir") + "/" + tmppath + "/");
     		fileOut.mkdirs();
     		fileOut = new File(System.getProperty("java.io.tmpdir") + "/" + tmppath + "/" + name);
+    		if (fileOut.exists()) if (getDeleteDll()) {
+    			System.out.println("loadLibFromJar: deleting dll " + fileOut.toString());
+    			System.out.println("loadLibFromJar: deleting dll success: " + fileOut.delete());
+    		}
     		if (!fileOut.exists()) {
     			OutputStream out;
     			out = new FileOutputStream(fileOut);
@@ -369,11 +395,47 @@ public class ExplorerCanvas extends Canvas implements HierarchyListener {
     		} catch (Exception e) {
     			fileOut.delete();
         		e.printStackTrace();
-        		throw new UnsatisfiedLinkError("loadLib:System.load failed");
+        		throw new UnsatisfiedLinkError("loadLibFromJar: System.load failed");
         	}
+    		
+			System.out.println("loadLibFromJar: System.load success");
+    		InputStream inManifest = ClassLoader.class.getResourceAsStream("/META-INF/MANIFEST.MF");
+			System.out.println("loadLibFromJar: inManifest: " + inManifest);
+
+			Manifest manifest = new Manifest(inManifest);
+
+			String sJarBuiltDate = manifest.getMainAttributes().getValue("Built-Date");
+			System.out.println("loadLibFromJar: jar built date: " + sJarBuiltDate);
+			String sDllBuiltDate = ExplorerCanvas.getBuiltDate();
+			System.out.println("loadLibFromJar: dll built date: " + sDllBuiltDate);
+			
+			if (!sJarBuiltDate.equalsIgnoreCase(sDllBuiltDate)) {
+				String s = "Built date of jar (" + sJarBuiltDate + ") does not match with\nbuilt date of dll (" + sDllBuiltDate
+						+ ")\ndll path: " + fileOut.toString() 
+						+ "\n\nPress OK to delete dll file, CANCEL to ignore\nOK is recommended";
+				int iResponse = JOptionPane.showConfirmDialog(null, s, "ExplorerCanvas loading error", JOptionPane.OK_CANCEL_OPTION);
+				if (iResponse==JOptionPane.OK_OPTION) {
+					setDeleteDll();
+					System.exit(1);
+				}
+			}
+
     	} catch (Exception e) {
     		e.printStackTrace();
-    		throw new UnsatisfiedLinkError("loadLib:Failed to load required DLL");
+    		throw new UnsatisfiedLinkError("loadLibFromJar: Failed to load required DLL");
     	}
+    }
+    
+    private static final String PREFKEY = "deleteDll";
+    		
+    private static void setDeleteDll() {
+    	Preferences.userRoot().node(ExplorerCanvas.class.getName()).putBoolean(PREFKEY, true);
+    }
+
+    private static boolean getDeleteDll() {
+    	Preferences prefs = Preferences.userRoot().node(ExplorerCanvas.class.getName());
+       	boolean b = prefs.getBoolean(PREFKEY, false);
+       	prefs.remove(PREFKEY);
+       	return b;
     }
 }
